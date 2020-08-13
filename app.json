@@ -1,0 +1,12 @@
+{
+  "name": "autosofia",
+  "displayName": "autosofia",
+  "expo": {
+    "name": "autosofia",
+    "slug": "autosofia",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
