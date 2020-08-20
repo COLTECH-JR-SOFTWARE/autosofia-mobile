@@ -1,5 +1,7 @@
-import React from 'react';
-import {ImageBackground, Image} from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInRequest } from '../../store/modules/auth/actions';
 import {
   Container,
   Form,
@@ -19,6 +21,16 @@ import background from '../../assets/background.png';
 import mainIcon from '../../assets/main-icon.png';
 
 export default function Login({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loading = useSelector(state => state.auth.loading);
+  const dispatch = useDispatch();
+
+  function handleLogin(){
+    dispatch(signInRequest(email, password));
+  }
+
   return (
     <Container keyboardShouldPersistTaps="handled" source={background} blurRadius={15}>
       <MainIcon source={mainIcon} />
@@ -28,16 +40,21 @@ export default function Login({navigation}) {
           autoCapitalize="none"
           autoCorrect={false}
           placeholder="E-MAIL"
+          value={email}
+          onChangeText={setEmail}
           type="emailAdress"
         />
         <Input
           autoCapitalize="none"
           autoCorrect={false}
+          secureTextEntry
           placeholder="SENHA"
+          value={password}
+          onChangeText={setPassword}
           type="password"
         />
-        <Submit onPress={() => {}}>
-          <SubmitText>entrar</SubmitText>
+        <Submit onPress={handleLogin}>
+          {loading ? <ActivityIndicator size={28} color="#FFF"/> : <SubmitText>entrar</SubmitText>}          
         </Submit>
         <View>
           <Line />
