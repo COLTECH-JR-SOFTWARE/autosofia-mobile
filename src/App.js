@@ -5,7 +5,7 @@ import { StatusBar } from 'react-native';
 
 import { store, persistor } from './store';
 
-import Routes from './routes';
+import Routes from './Routes';
 
 export default function App() {
   return (
