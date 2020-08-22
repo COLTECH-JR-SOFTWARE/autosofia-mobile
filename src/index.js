@@ -1,20 +1,8 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { registerRootComponent } from 'expo';
 
-import App from './App';
+import App from './src/index';
 
-export default function Index() {
-  return (
-    <>
-      <StatusBar
-        backgroundColor="transparent"
-        translucent
-        barStyle="light-content"
-        animated
-      />
-      <App />
-    </>
-  );
-}
+// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
+// It also ensures that whether you load the app in the Expo client or in a native build,
+// the environment is set up appropriately
+registerRootComponent(App);
