@@ -1,20 +1,27 @@
 import styled from 'styled-components/native';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import Constants from 'expo-constants';
 
 export const Container = styled.View`
   flex: 1;
-  padding-top: ${getStatusBarHeight(true)}px;
+  justify-content: space-between;
+  padding: 80px 20px 160px;
+`;
+
+export const MainIcon = styled.Image`
+  width: 120px;
+  height: 120px;
+  align-self: center;
+  margin-bottom: 10px;
 `;
 
 export const LogoContent = styled.View`
-  margin-top: 150px;
   align-items: center;
 `;
 
-export const Logo = styled.Image`
-  width: 150px;
-	height: 150px;
-  margin-bottom: 10px;
+export const Message = styled.Text`
+  color: #fff;
+  font-size: 20px;
+  padding-left: 40px;
 `;
 
 export const Title = styled.Text`
