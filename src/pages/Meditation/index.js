@@ -11,7 +11,7 @@ import icon4 from '~/assets/iconeRecordacoes.png';
 
 const Meditation = () => {
   return (
-    <Background>
+    <Background blurRadius={20}>
       <Container>
         <MainIcon title="VAMOS MEDITAR JUNTOS"/>
         <IconContainer>
