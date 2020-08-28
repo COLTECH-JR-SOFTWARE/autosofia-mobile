@@ -3,8 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Navigation from './Navigation';
-import Background from '~/components/Background';
-
+import Article from '~/pages/Article';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +16,7 @@ export default () => {
         }}
       >
         <Stack.Screen name='Navigation' component={Navigation} />
+        <Stack.Screen name='Article' component={Article} />
       </Stack.Navigator>
     </NavigationContainer>
   );
