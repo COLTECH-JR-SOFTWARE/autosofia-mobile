@@ -7,6 +7,11 @@ import iconMeditation from '~/assets/iconeMeditacao.png';
 import iconRelaxation from '~/assets/iconeRelaxamento.png';
 import iconLearn from '~/assets/iconeAprenda.png';
 import iconProfile from '~/assets/iconePerfil.png';
+import pressedIconHome from '~/assets/iconeHomePressionado.png';
+import pressedIconMeditation from '~/assets/iconeMeditacaoPressionado.png';
+import pressedIconRelaxation from '~/assets/iconeRelaxamentoPressionado.png';
+import pressedIconLearn from '~/assets/iconeAprendaPressionado.png';
+import pressedIconProfile from '~/assets/iconePerfilPressionado.png';
 
 import Home from '~/pages/Home';
 import Learn from '~/pages/Learn';
@@ -21,7 +26,7 @@ const Navigation = () => {
     <Tab.Navigator
       tabBarOptions={{
         style: {
-          backgroundColor: "#ffdb58",
+          backgroundColor: "#FBDE0E",
           borderTopColor: 'rgba(255, 255, 255, 0.2)',
           position: 'absolute',
           padding: 10,
@@ -31,7 +36,7 @@ const Navigation = () => {
           borderRadius: 70
         },
         activeTintColor: "#fff",
-        inactiveTintColor: "#92929c"
+        inactiveTintColor: "#f6f6f6"
       }}
     >
       <Tab.Screen
@@ -39,12 +44,11 @@ const Navigation = () => {
         component={Home}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => {
-            return <Image
-              source={iconHome}
-              style={{width: 30, height: 30, tintColor: color}}
-            />;
-          },
+          tabBarIcon: ({focused, color}) => (
+            focused
+              ? <Image source={pressedIconHome} style={{width: 30, height: 30, tintColor: color}} />
+              : <Image source={iconHome} style={{width: 30, height: 30, tintColor: color}} />
+          ),
         }}
       />
 
@@ -53,12 +57,11 @@ const Navigation = () => {
         component={Meditation}
         options={{
           tabBarLabel: 'Meditação',
-          tabBarIcon: ({color}) => {
-            return <Image
-              source={iconMeditation}
-              style={{width: 30, height: 30, tintColor: color}}
-            />;
-          },
+          tabBarIcon: ({focused, color}) => (
+            focused
+              ? <Image source={pressedIconMeditation} style={{width: 30, height: 30, tintColor: color}} />
+              : <Image source={iconMeditation} style={{width: 30, height: 30, tintColor: color}} />
+          ),
         }}
       />
 
@@ -67,12 +70,11 @@ const Navigation = () => {
         component={Relaxation}
         options={{
           tabBarLabel: 'Relaxamento',
-          tabBarIcon: ({color}) => {
-            return <Image
-              source={iconRelaxation}
-              style={{width: 30, height: 30, tintColor: color}}
-            />;
-          },
+          tabBarIcon: ({focused, color}) => (
+            focused
+              ? <Image source={pressedIconRelaxation} style={{width: 30, height: 30, tintColor: color}} />
+              : <Image source={iconRelaxation} style={{width: 30, height: 30, tintColor: color}} />
+          ),
         }}
       />
 
@@ -81,12 +83,11 @@ const Navigation = () => {
         component={Learn}
         options={{
           tabBarLabel: 'Aprenda',
-          tabBarIcon: ({color}) => {
-            return <Image
-              source={iconLearn}
-              style={{width: 30, height: 30, tintColor: color}}
-            />;
-          },
+          tabBarIcon: ({focused, color}) => (
+            focused
+              ? <Image source={pressedIconLearn} style={{width: 30, height: 30, tintColor: color}} />
+              : <Image source={iconLearn} style={{width: 30, height: 30, tintColor: color}} />
+          ),
         }}
       />
 
@@ -95,12 +96,11 @@ const Navigation = () => {
         component={Profile}
         options={{
           tabBarLabel: 'Perfil',
-          tabBarIcon: ({color}) => {
-            return <Image
-              source={iconProfile}
-              style={{width: 30, height: 30, tintColor: color}}
-            />;
-          },
+          tabBarIcon: ({focused, color}) => (
+            focused
+              ? <Image source={pressedIconProfile} style={{width: 30, height: 30, tintColor: color}} />
+              : <Image source={iconProfile} style={{width: 30, height: 30, tintColor: color}} />
+          ),
         }}
       />
 
