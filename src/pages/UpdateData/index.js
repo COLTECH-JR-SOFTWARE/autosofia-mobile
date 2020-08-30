@@ -34,7 +34,7 @@ const UpdateData = ({navigation}) => {
           />
 
           <FormInput
-            keyboardType="email-adress"
+            keyboardType="email-address"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="EMAIL"

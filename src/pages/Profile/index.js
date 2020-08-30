@@ -3,7 +3,7 @@ import React from 'react';
 import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
-import { Container, SignLink, SignLinkText, Info, ArrowBack } from './styles';
+import { Container, SignLink, SignLinkText, Info } from './styles';
 
 const Profile = ({navigation}) => {
   return (

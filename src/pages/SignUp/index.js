@@ -10,13 +10,16 @@ import {
   Line,
   SocialText,
   Social,
+  SignLink,
+  SignLinkText
 } from './styles';
 
 
 import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
-const SignIn = ({navigation}) => {
+const SignUp = ({navigation}) => {
+  const emailRef = useRef();
   const passwordRef = useRef();
 
   return (
@@ -25,10 +28,19 @@ const SignIn = ({navigation}) => {
         <MainIcon title="Autosofia" />
         <Form>
           <FormInput
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="NOME"
+            returnKeyType="next"
+            onSubmitEditing={() => emailRef.current.focus()}
+          />
+
+          <FormInput
             keyboardType="email-address"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="EMAIL"
+            ref={emailRef}
             returnKeyType="next"
           />
 
@@ -52,9 +64,12 @@ const SignIn = ({navigation}) => {
             <SocialText>Continuar com o Facebook</SocialText>
           </Social>
         </Form>
+        <SignLink onPress={() => navigation.navigate('SignIn')}>
+          <SignLinkText>Já tem uma conta? Entrar</SignLinkText>
+        </SignLink>
       </Container>
     </Background>
   );
 }
 
-export default SignIn;
+export default SignUp;

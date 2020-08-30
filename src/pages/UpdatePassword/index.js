@@ -34,7 +34,7 @@ const UpdatePassword = ({navigation}) => {
           />
 
           <FormInput
-            keyboardType="new-password"
+            keyboardType="numeric"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="NOVA SENHA"

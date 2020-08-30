@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  padding: 80px 0 0;
+  padding: 70px 30px;
 `;
 
 export const Info = styled.View`
@@ -11,7 +11,7 @@ export const Info = styled.View`
 
 export const SignLink = styled.TouchableOpacity`
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 30px
 `;
 
 export const SignLinkText =  styled.Text`
@@ -19,11 +19,3 @@ export const SignLinkText =  styled.Text`
   font-weight: bold;
   font-size: 14px;
 `;
-
-export const ArrowBack = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  margin-left: 10px;
-`;
-
-
