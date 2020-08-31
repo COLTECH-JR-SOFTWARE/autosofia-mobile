@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-// import { Container } from './styles';
+import Background from '~/components/Background';
 
 const Relaxation = () => {
   return (
-    <View>
-      <Text>
-        Relaxamento
-      </Text>
-    </View>
+    <Background blurRadius={20}>
+      <View/>
+    </Background>
   );
 }
 

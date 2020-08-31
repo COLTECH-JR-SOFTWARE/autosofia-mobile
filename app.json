@@ -1,9 +1,9 @@
 {
-  "name": "autosofia",
-  "displayName": "autosofia",
+  "name": "Autosofia",
+  "displayName": "Autosofia",
   "expo": {
-    "name": "autosofia",
-    "slug": "autosofia",
+    "name": "Autosofia",
+    "slug": "Autosofia",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
