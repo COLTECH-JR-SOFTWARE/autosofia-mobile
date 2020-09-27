@@ -1,79 +1,154 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from "react-native";
-import Slider from "react-native-slider";
-import Moment from "moment";
-import { FontAwesome5 } from "@expo/vector-icons";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import Slider from 'react-native-slider';
+import Moment from 'moment';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
-export default class Player extends React.Component {
-    state = {
-        isPlaying: true,
-        trackLength: 300,
-        timeElapsed: "0:00",
-        timeRemaining: "5:00"
+const soundObject = new Audio.Sound();
+
+const Player = () => {
+  const [seconds, setSeconds] = useState(0);
+  const [play, setPlay] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
+  const [loadInRequest, setLoadInRequest] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [trackLength, setTrackLength] = useState(300);
+  const [timeElapsed, setTimeElapsed] = useState('0:00');
+  const [timeRemaining, setTimeRemaining] = useState('3:40');
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isPlaying && seconds < trackLength - 1) {
+      interval = setInterval(() => {
+        changeTime(seconds + 1);
+        setSeconds(seconds => seconds + 1);
+      }, 1000);
+    } else if (!isPlaying && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, seconds]);
+
+  async function loadAudio(){
+    setLoadInRequest(true);
+
+    const source = { 
+      uri: 'https://upload-ex-audio.s3.amazonaws.com/fa9974601cbfa15071042f259b639c8c-Golden%20Empire%20-%20The%20126ers.mp3',
     };
 
-    changeTime = seconds => {
-        this.setState({ timeElapsed: Moment.utc(seconds * 1000).format("m:ss") });
-        this.setState({ timeRemaining: Moment.utc((this.state.trackLength - seconds) * 1000).format("m:ss") });
-    };
+    const initialStatus = {};
+    const downloadFirst = true;
 
-    handlePlayPause = async () => {
-      const isPlaying = this.state
-
-      this.setState({
-        isPlaying: !isPlaying
-      })
+    try {
+      await soundObject.loadAsync(source, initialStatus, downloadFirst);
+      const soundData = await soundObject.getStatusAsync();
+      setTimeRemaining(Moment.utc(soundData.durationMillis).format("m:ss"));
+      setTrackLength(soundData.durationMillis/1000);
+      setIsLoad(true);
+      //await soundObject.unloadAsync();
+    } catch (error) {
+      console.log(error);
+      // An error occurred!
     }
 
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 32 }}>
-                    <TouchableOpacity>
-                        <FontAwesome5 name="backward" size={25} color="#fff"></FontAwesome5>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.playButtonContainer} onPress={this.handlePlayPause}>
-                      {this.state.isPlaying ? (
-                        <FontAwesome5
-                        name="play"
-                        size={35}
-                        color="#fff"
-                        style={[styles.playButton, { marginLeft: 8 }]}
-                    ></FontAwesome5>
-                    ) : (
-                      <FontAwesome5
-                            name="pause"
-                            size={35}
-                            color="#fff"
-                            style={[styles.playButton, { marginLeft: 8 }]}
-                        ></FontAwesome5>
-                      )
-                      }
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <FontAwesome5 name="forward" size={25} color="#fff"></FontAwesome5>
-                    </TouchableOpacity>
-                </View>
+    setLoadInRequest(false);
+  }
 
-                <View style={{ margin: 32 }}>
-                    <Slider
-                        minimumValue={0}
-                        maximumValue={this.state.trackLength}
-                        trackStyle={styles.track}
-                        thumbStyle={styles.thumb}
-                        minimumTrackTintColor="#fff"
-                        onValueChange={seconds => this.changeTime(seconds)}
-                    ></Slider>
-                    <View style={{ marginTop: -12, flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={[styles.textLight, styles.timeStamp]}>{this.state.timeElapsed}</Text>
-                        <Text style={[styles.textLight, styles.timeStamp]}>{this.state.timeRemaining}</Text>
-                    </View>
-                </View>
+  async function playSound(){
+    await soundObject.playAsync();
+    setIsPlaying(true);
+  }
 
-            </SafeAreaView>
-        );
+  async function pauseSound(){
+    await soundObject.pauseAsync();
+    setIsPlaying(false);
+  }
+
+  function changeTime(seconds) {
+    setTimeElapsed(Moment.utc(seconds * 1000).format("m:ss"));
+    setTimeRemaining(Moment.utc((trackLength - seconds) * 1000).format("m:ss"));
+  };
+
+  async function handleChangeTime(seconds){
+    await pauseSound();
+
+    await soundObject.setPositionAsync(seconds * 1000);
+    changeTime(seconds);
+    setSeconds(seconds);
+
+    await playSound();
+  }
+
+  async function toggleSoundState() {
+    if(loadInRequest){
+      return;
     }
+    
+    if(!isLoad){
+      await loadAudio();
+    }
+
+    if(play) {
+      setPlay(false);
+      pauseSound();
+    } else {
+      setPlay(true);
+      playSound();
+    }
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 32 }}>
+        <TouchableOpacity>
+          <FontAwesome5 name="backward" size={25} color="#fff"></FontAwesome5>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.playButtonContainer} onPress={toggleSoundState}>
+          {!play ? (
+            <FontAwesome5
+              name="play"
+              size={35}
+              color="#fff"
+              style={[styles.playButton, { marginLeft: 8 }]}
+            ></FontAwesome5>
+        ) : (
+            <FontAwesome5
+              name="pause"
+              size={35}
+              color="#fff"
+              style={[styles.playButton, { marginLeft: 8 }]}
+            ></FontAwesome5>
+          )
+          }
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <FontAwesome5 name="forward" size={25} color="#fff"></FontAwesome5>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ margin: 32 }}>
+        <Slider
+          minimumValue={0}
+          maximumValue={trackLength}
+          trackStyle={styles.track}
+          thumbStyle={styles.thumb}
+          minimumTrackTintColor="#fff"
+          value={seconds}
+          onValueChange={seconds => handleChangeTime(seconds)}
+        ></Slider>
+        <View style={{ marginTop: -12, flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={[styles.textLight, styles.timeStamp]}>{timeElapsed}</Text>
+          <Text style={[styles.textLight, styles.timeStamp]}>{timeRemaining}</Text>
+        </View>
+      </View>
+
+    </SafeAreaView>
+  );
 }
+
+export default Player;
 
 const styles = StyleSheet.create({
     container: {
