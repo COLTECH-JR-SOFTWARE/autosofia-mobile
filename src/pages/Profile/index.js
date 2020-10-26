@@ -1,9 +1,10 @@
 import React from 'react';
+import {AntDesign} from '@expo/vector-icons'
 
 import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
-import { Container, SignLink, SignLinkText, Info } from './styles';
+import { Container, Info, Button, ButtonText  } from './styles';
 
 const Profile = ({navigation}) => {
   return (
@@ -12,12 +13,20 @@ const Profile = ({navigation}) => {
         <MainIcon title="AUTOSOFIA"/>
 
         <Info>
-          <SignLink onPress={() => navigation.navigate('UpdateData')}>
-            <SignLinkText>INFORMAÇÕES DA CONTA</SignLinkText>
-          </SignLink>
-          <SignLink onPress={() => navigation.navigate('UpdatePassword')}>
-            <SignLinkText>MUDAR SENHA</SignLinkText>
-          </SignLink>
+          <Button onPress={() => navigation.navigate('UpdateData')}>
+            <ButtonText>MEUS DADOS</ButtonText>
+            <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
+          </Button>
+
+          <Button onPress={() => navigation.navigate('Chat')}>
+            <ButtonText>Chat</ButtonText>
+            <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
+          </Button>
+
+          <Button onPress={() => navigation.navigate('UpdatePassword')}>
+            <ButtonText>Mudar senha</ButtonText>
+            <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
+          </Button>
         </Info>
       </Container>
     </Background>

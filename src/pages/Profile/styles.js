@@ -6,16 +6,25 @@ export const Container = styled.View`
 `;
 
 export const Info = styled.View`
-  margin-top: 30px;
+  margin-top: 50px;
 `;
 
-export const SignLink = styled.TouchableOpacity`
-  margin-top: 20px;
-  margin-left: 30px
+export const Button = styled.TouchableOpacity`
+  flex-direction: row;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 30px;
+  border-color: white;
+  border-width: 2px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
 `;
 
-export const SignLinkText =  styled.Text`
+export const ButtonText = styled.Text`
   color: white;
-  font-weight: bold;
+  text-transform: uppercase;
   font-size: 14px;
+  font-weight: bold;
+  margin-left: 30px;
 `;
