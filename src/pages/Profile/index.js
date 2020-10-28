@@ -27,6 +27,11 @@ const Profile = ({navigation}) => {
             <ButtonText>Mudar senha</ButtonText>
             <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
           </Button>
+
+          <Button onPress={() => navigation.navigate('SignIn')}>
+            <ButtonText>Sair</ButtonText>
+          </Button>
+
         </Info>
       </Container>
     </Background>
