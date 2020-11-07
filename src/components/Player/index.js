@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import Slider from 'react-native-slider';
 import Moment from 'moment';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
 const soundObject = new Audio.Sound();
@@ -34,7 +34,7 @@ const Player = () => {
   async function loadAudio(){
     setLoadInRequest(true);
 
-    const source = { 
+    const source = {
       uri: 'https://upload-ex-audio.s3.amazonaws.com/fa9974601cbfa15071042f259b639c8c-Golden%20Empire%20-%20The%20126ers.mp3',
     };
 
@@ -85,7 +85,7 @@ const Player = () => {
     if(loadInRequest){
       return;
     }
-    
+
     if(!isLoad){
       await loadAudio();
     }
@@ -103,7 +103,7 @@ const Player = () => {
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 32 }}>
         <TouchableOpacity>
-          <FontAwesome5 name="backward" size={25} color="#fff"></FontAwesome5>
+          <Entypo name="controller-jump-to-start" size={25} color="#fff"></Entypo>
         </TouchableOpacity>
         <TouchableOpacity style={styles.playButtonContainer} onPress={toggleSoundState}>
           {!play ? (
@@ -124,11 +124,11 @@ const Player = () => {
           }
         </TouchableOpacity>
         <TouchableOpacity>
-          <FontAwesome5 name="forward" size={25} color="#fff"></FontAwesome5>
+          <Entypo name="controller-next" size={25} color="#fff"></Entypo>
         </TouchableOpacity>
       </View>
 
-      <View style={{ margin: 32 }}>
+      <View style={{ margin: 30 }}>
         <Slider
           minimumValue={0}
           maximumValue={trackLength}
@@ -153,7 +153,7 @@ export default Player;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 60,
+        marginTop: 20,
     },
     textLight: {
         color: "#fff"
