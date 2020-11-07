@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { Container, Icon, Title } from './styles';
+import { Container, Icon, Title, Phrase } from './styles';
 import iconMain from '~/assets/main-icon.png';
 
-const MainIcon = ({title = ''}) => {
+const MainIcon = ({title = '', phrase= ''}) => {
   return (
     <Container>
       <Icon source={iconMain} />
-      <Title>{title}</Title>
+      {
+        title === ''?
+          <Phrase>{phrase}</Phrase>
+          :<Title>{title}</Title>
+      }
     </Container>
   );
 }
