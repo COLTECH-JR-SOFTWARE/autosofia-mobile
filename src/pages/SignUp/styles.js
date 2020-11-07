@@ -73,3 +73,7 @@ export const SignLinkText = styled.Text`
   font-size: 14px;
   margin-top: 20px;
 `;
+
+export const Underline = styled.Text`
+  text-decoration-line: underline;
+`;

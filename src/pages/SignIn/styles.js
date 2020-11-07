@@ -62,3 +62,15 @@ export const SocialText = styled.Text`
   font-weight: bold;
   text-align: center;
 `;
+
+export const SignLink =  styled.TouchableOpacity`
+  margin-top: 20px;
+`;
+
+export const SignLinkText = styled.Text`
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 10px;
+  text-decoration-line: underline;
+`;
