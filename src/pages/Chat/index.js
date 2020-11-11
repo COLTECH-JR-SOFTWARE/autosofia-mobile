@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 
 import { Container } from './styles';
 
@@ -8,6 +9,7 @@ const Chat = () => {
   return (
     <Background>
       <Container>
+        {Alert.alert("Em processo de construção!!!")}
       </Container>
     </Background>
   );

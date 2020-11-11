@@ -10,7 +10,8 @@ import {
   Social,
   SocialText,
   SignLink,
-  SignLinkText
+  SignLinkText,
+  Underline
 } from './styles';
 
 import Background from '~/components/Background';
@@ -38,8 +39,8 @@ const Start = ({navigation}) => {
         </Social>
 
       </Form>
-      <SignLink onPress={() => {}}>
-        <SignLinkText>Já tem uma conta? Entrar</SignLinkText>
+      <SignLink onPress={() => { navigation.navigate('SignIn'); }}>
+        <SignLinkText>Já tem uma conta? <Underline>Entrar</Underline></SignLinkText>
       </SignLink>
      </Container>
    </Background>
