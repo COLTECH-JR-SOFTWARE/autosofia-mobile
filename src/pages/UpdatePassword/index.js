@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef,useState } from 'react';
 import Octions from 'react-native-vector-icons/Octicons';
+import { useDispatch, useSelector } from 'react-redux';
+import {updateProfileRequest} from '~/store/modules/user/actions';
 
 import { Container, ArrowBack, SignLink, Title, Form, FormTitle, FormInput, SubmitButton } from './styles';
 
@@ -7,7 +9,17 @@ import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
 const UpdatePassword = ({navigation}) => {
+  const [password, setPassword] = useState('');
+  const [newpassword, setnewPassword] = useState('');
+  const name = useSelector(state => state.auth.signed);
+  const dispatch = useDispatch(); 
+  const email = useSelector(state => state.user.profile.email);
   const newPasswordRef = useRef();
+
+  function handle(){
+    dispatch(updateProfileRequest(name,email,password,newpassword,newpassword));
+    navigation.navigate('Navigation');
+  }
 
   return (
     <Background blurRadius={20}>
@@ -31,18 +43,21 @@ const UpdatePassword = ({navigation}) => {
             placeholder="SENHA ATUAL"
             returnKeyType="next"
             onSubmitEditing={() => newPasswordRef.current.focus()}
+            value={password}
+            onChangeText={setPassword}
           />
 
           <FormInput
-            keyboardType="numeric"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="NOVA SENHA"
             ref={newPasswordRef}
             returnKeyType="next"
+            value={newpassword}
+            onChangeText={setnewPassword}
           />
 
-          <SubmitButton onPress={() => {}}>Atualizar</SubmitButton>
+          <SubmitButton onPress={handle}>Atualizar</SubmitButton>
         </Form>
 
       </Container>

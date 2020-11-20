@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInRequest } from '../../store/modules/auth/actions';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {
   Container,
@@ -16,8 +18,19 @@ import {
 import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
-const SignIn = ({navigation}) => {
+const SignIn = ({ navigation }) => {
+
   const passwordRef = useRef();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const loading = useSelector(state => state.auth.loading);
+
+
+  async function handlesubmit() {
+    const result = dispatch(signInRequest(email, senha));
+  }
 
   return (
     <Background blurRadius={20}>
@@ -30,6 +43,8 @@ const SignIn = ({navigation}) => {
             autoCapitalize="none"
             placeholder="EMAIL"
             returnKeyType="next"
+            value={email}
+            onChangeText={setEmail}
           />
 
           <FormInput
@@ -37,9 +52,11 @@ const SignIn = ({navigation}) => {
             placeholder="SENHA"
             ref={passwordRef}
             returnKeyType="next"
+            value={senha}
+            onChangeText={setSenha}
           />
 
-          <SubmitButton onPress={() => {navigation.navigate('Navigation')}}>Participar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handlesubmit}>Participar</SubmitButton>
 
           <View>
             <Line />
@@ -48,7 +65,7 @@ const SignIn = ({navigation}) => {
           </View>
 
           <Social>
-            <Icon name="sc-facebook" size={40} color="#fff"/>
+            <Icon name="sc-facebook" size={40} color="#fff" />
             <SocialText>Continuar com o Facebook</SocialText>
           </Social>
         </Form>

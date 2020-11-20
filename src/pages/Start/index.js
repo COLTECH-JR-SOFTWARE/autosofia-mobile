@@ -38,7 +38,7 @@ const Start = ({navigation}) => {
         </Social>
 
       </Form>
-      <SignLink onPress={() => {}}>
+      <SignLink onPress={() => navigation.navigate('SignIn')}>
         <SignLinkText>Já tem uma conta? Entrar</SignLinkText>
       </SignLink>
      </Container>
