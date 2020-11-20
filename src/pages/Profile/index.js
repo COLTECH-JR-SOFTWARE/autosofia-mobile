@@ -13,13 +13,13 @@ const Profile = ({navigation}) => {
         <MainIcon title="AUTOSOFIA"/>
 
         <Info>
-          <Button onPress={() => navigation.navigate('UpdateData')}>
-            <ButtonText>MEUS DADOS</ButtonText>
+          <Button onPress={() => navigation.navigate('Chat')}>
+            <ButtonText>Chat</ButtonText>
             <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
           </Button>
 
-          <Button onPress={() => navigation.navigate('Chat')}>
-            <ButtonText>Chat</ButtonText>
+          <Button onPress={() => navigation.navigate('UpdateData')}>
+            <ButtonText>MEUS DADOS</ButtonText>
             <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
           </Button>
 
@@ -30,6 +30,11 @@ const Profile = ({navigation}) => {
 
           <Button onPress={() => navigation.navigate('SignIn')}>
             <ButtonText>Sair</ButtonText>
+          </Button>
+
+          <Button onPress={() => navigation.navigate('PlayerScreen')}>
+            <ButtonText>Player</ButtonText>
+            <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
           </Button>
 
         </Info>

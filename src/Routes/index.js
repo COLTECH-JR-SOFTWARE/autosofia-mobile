@@ -11,6 +11,7 @@ import SignUp from '~/pages/SignUp';
 import SignIn from '~/pages/SignIn';
 import Remember from '~/pages/Remember';
 import Chat from '~/pages/Chat';
+import PlayerScreen from '~/pages/PlayerScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,7 @@ export default () => {
           },
           headerTintColor: 'white',
         }} />
+        <Stack.Screen name='PlayerScreen' component={PlayerScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

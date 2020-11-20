@@ -9,7 +9,7 @@ import icon2 from '~/assets/iconeAutoaprovacao.png';
 import icon3 from '~/assets/iconeSaudeFisica.png';
 import icon4 from '~/assets/iconeRecordacoes.png';
 
-const Meditation = () => {
+const Meditation = ({navigation}) => {
   return (
     <Background blurRadius={20}>
       <Container>
