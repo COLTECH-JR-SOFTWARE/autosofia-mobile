@@ -16,12 +16,12 @@ const Meditation = ({navigation}) => {
         <MainIcon title="VAMOS MEDITAR JUNTOS"/>
         <IconContainer>
           <Row>
-            <Button imageSource={icon1} label="prosperidade" />
-            <Button imageSource={icon2} label="autoaprovação" />
+            <Button imageSource={icon1} label="prosperidade" onPress={() => navigation.navigate('PlayerScreen', { text: 'prosperidade'})}/>
+            <Button imageSource={icon2} label="autoaprovação" onPress={() => navigation.navigate('PlayerScreen', { text: 'autoaprovação'})}/>
           </Row>
           <Row>
-            <Button imageSource={icon3} label="saúde física" />
-            <Button imageSource={icon4} label="recordações" />
+            <Button imageSource={icon3} label="saúde física" onPress={() => navigation.navigate('PlayerScreen', { text: 'saúde física'})}/>
+            <Button imageSource={icon4} label="recordações" onPress={() => navigation.navigate('PlayerScreen', { text: 'recordações'})}/>
           </Row>
         </IconContainer>
       </Container>

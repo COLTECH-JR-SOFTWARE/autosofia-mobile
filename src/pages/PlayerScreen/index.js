@@ -7,9 +7,10 @@ import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 import Player from '~/components/Player';
 
-const text = 'Categoria';
+// const text = 'Categoria';
 
-const PlayerScreen = ({navigation}) => {
+const PlayerScreen = ({route, navigation}) => {
+  const {text} = route.params;
   return (
     <Background blurRadius={20}>
       <Container>
