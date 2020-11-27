@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Player from '../../components/Player';
-
 import {
   Container,
   Title,
@@ -16,7 +14,6 @@ const Home = () => {
     <Background blurRadius={0}>
       <Container>
         <MainIcon title="AUTOSOFIA"/>
-        <Player/>
         <Message>Bem vindo, User</Message>
       </Container>
     </Background>

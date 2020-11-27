@@ -54,7 +54,6 @@ export const Social = styled.TouchableOpacity`
   align-items: center;
 `;
 
-
 export const SocialText = styled.Text`
   color: white;
   text-transform: uppercase;
@@ -63,17 +62,18 @@ export const SocialText = styled.Text`
   text-align: center;
 `;
 
+export const ContainerLink = styled.View`
+  margin: 20px;
+  align-items: center;
+`;
+
 export const SignLink =  styled.TouchableOpacity`
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 export const SignLinkText = styled.Text`
   color: #fff;
   font-weight: bold;
-  font-size: 14px;
-  margin-top: 20px;
-`;
-
-export const Underline = styled.Text`
+  font-size: 13px;
   text-decoration-line: underline;
 `;

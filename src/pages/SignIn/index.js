@@ -12,6 +12,8 @@ import {
   Line,
   SocialText,
   Social,
+  SignLink,
+  SignLinkText
 } from './styles';
 
 
@@ -69,6 +71,9 @@ const SignIn = ({ navigation }) => {
             <SocialText>Continuar com o Facebook</SocialText>
           </Social>
         </Form>
+        <SignLink onPress={() => {navigation.navigate('Remember')}}>
+          <SignLinkText>Esqueci minha senha</SignLinkText>
+        </SignLink>
       </Container>
     </Background>
   );

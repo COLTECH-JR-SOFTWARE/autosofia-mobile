@@ -9,6 +9,7 @@ import UpdatePassword from '~/pages/UpdatePassword';
 import Start from '~/pages/Start';
 import SignUp from '~/pages/SignUp';
 import SignIn from '~/pages/SignIn';
+import Remember from '~/pages/Remember';
 import Chat from '~/pages/Chat';
 import Home from '../pages/Home';
 
@@ -28,12 +29,24 @@ export default (props) => {
         {props.signed ?
           (
             <>
-              <Stack.Screen name='Navigation' component={Navigation} />
-              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name='Remember' component={Remember} />
+              <Stack.Screen name='Navigation' component={Navigation}/>
               <Stack.Screen name='Article' component={Article} />
               <Stack.Screen name='UpdateData' component={UpdateData} />
               <Stack.Screen name='UpdatePassword' component={UpdatePassword} />
-              <Stack.Screen name='Chat' component={Chat} />
+              <Stack.Screen name='Chat' component={Chat}  options={{
+                title: 'João de Deus',
+
+                headerShown: true,
+                headerStyle: {
+                  backgroundColor: '#FFDB58'
+                },
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                  color: 'white',
+                },
+                headerTintColor: 'white',
+              }} />
             </>
           )
           : (
@@ -44,7 +57,6 @@ export default (props) => {
             </>
           )
         }
-
       </Stack.Navigator>
     </NavigationContainer>
   );
