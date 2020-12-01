@@ -1,4 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef,useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {signUpRequest} from '~/store/modules/auth/actions';
+
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {
   Container,
@@ -22,6 +25,18 @@ import MainIcon from '~/components/MainIcon';
 const SignUp = ({navigation}) => {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch(); 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loading = useSelector(state => state.auth.loading);
+
+
+  function handleLogin(){
+    dispatch(signUpRequest(name,email,password));
+    navigation.navigate('Navigation');
+  }
 
   return (
     <Background blurRadius={20}>
@@ -34,6 +49,9 @@ const SignUp = ({navigation}) => {
             placeholder="NOME"
             returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
+            value={name}
+            onChangeText={setName}
+            type="emailAdress"
           />
 
           <FormInput
@@ -43,6 +61,8 @@ const SignUp = ({navigation}) => {
             placeholder="EMAIL"
             ref={emailRef}
             returnKeyType="next"
+            value={email}
+            onChangeText={setEmail}
           />
 
           <FormInput
@@ -50,9 +70,11 @@ const SignUp = ({navigation}) => {
             placeholder="SENHA"
             ref={passwordRef}
             returnKeyType="next"
+            value={password}
+            onChangeText={setPassword}
           />
 
-          <SubmitButton onPress={() => {navigation.navigate('Navigation')}}>Participar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleLogin}>Participar</SubmitButton>
 
           <View>
             <Line />

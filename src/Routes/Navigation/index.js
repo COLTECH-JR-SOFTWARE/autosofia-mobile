@@ -10,7 +10,7 @@ import iconProfile from '~/assets/iconePerfil.png';
 import pressedIconHome from '~/assets/iconeHomePressionado.png';
 import pressedIconMeditation from '~/assets/iconeMeditacaoPressionado.png';
 import pressedIconRelaxation from '~/assets/iconeRelaxamentoPressionado.png';
-import pressedIconLearn from '~/assets/iconeAprendaPressionado.png';
+import pressedIconLearn from '~/assets/iconeAprenderPressionado.png';
 import pressedIconProfile from '~/assets/iconePerfilPressionado.png';
 
 import Home from '~/pages/Home';

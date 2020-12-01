@@ -37,10 +37,11 @@ export function* signUp({ payload }) {
   try {
     const { name, email, password } = payload;
 
-    yield call(api.post, 'users', {
+    yield call(api.post, 'user', {
       name,
       email,
       password,
+      payment:'premium',
     });
 
     Alert.alert(

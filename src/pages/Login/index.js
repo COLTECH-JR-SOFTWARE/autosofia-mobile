@@ -27,8 +27,11 @@ export default function Login({navigation}) {
   const loading = useSelector(state => state.auth.loading);
   const dispatch = useDispatch();
 
-  function handleLogin(){
-    dispatch(signInRequest(email, password));
+  function handleLogin(){ 
+   dispatch(signInRequest(email, password));
+
+    navigation.navigate('Home');
+
   }
 
   return (
