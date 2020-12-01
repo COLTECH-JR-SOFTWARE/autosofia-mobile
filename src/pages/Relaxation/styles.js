@@ -19,7 +19,7 @@ export const Description = styled.Text`
   text-align: center;
   color: white;
   margin: 5px;
-`;
+ `;
 
 export const Bold = styled.Text`
   font-weight: bold;

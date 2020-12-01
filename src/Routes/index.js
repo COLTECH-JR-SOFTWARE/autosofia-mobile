@@ -12,6 +12,7 @@ import SignIn from '~/pages/SignIn';
 import Remember from '~/pages/Remember';
 import Chat from '~/pages/Chat';
 import Home from '../pages/Home';
+import PlayerScreen from '~/pages/PlayerScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,7 +37,6 @@ export default (props) => {
               <Stack.Screen name='UpdatePassword' component={UpdatePassword} />
               <Stack.Screen name='Chat' component={Chat}  options={{
                 title: 'João de Deus',
-
                 headerShown: true,
                 headerStyle: {
                   backgroundColor: '#FFDB58'
@@ -47,7 +47,7 @@ export default (props) => {
                 },
                 headerTintColor: 'white',
               }} />
-            </>
+              <Stack.Screen name='PlayerScreen' component={PlayerScreen}/>
           )
           : (
             <>

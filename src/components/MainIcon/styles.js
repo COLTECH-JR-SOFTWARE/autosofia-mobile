@@ -14,7 +14,7 @@ export const Icon = styled.Image`
 
 export const Title = styled.Text`
   color: #ffdb58;
-  font-size: 20px;
+  font-size: 18px;
   text-transform: uppercase;
   font-weight: bold;
   text-align: center;

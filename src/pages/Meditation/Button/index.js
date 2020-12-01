@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Container, Image, Label } from './styles';
 
-const Button = ({imageSource, label}) => {
+const Button = ({imageSource, label, ...rest}) => {
   return (
-    <Container>
+    <Container {...rest}>
       <Image source={imageSource}/>
       <Label>{label}</Label>
     </Container>

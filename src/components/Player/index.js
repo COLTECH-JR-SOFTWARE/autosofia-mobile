@@ -7,7 +7,7 @@ import { Audio } from 'expo-av';
 
 const soundObject = new Audio.Sound();
 
-const Player = () => {
+const Player = (props) => {
   const [seconds, setSeconds] = useState(0);
   const [play, setPlay] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
@@ -15,7 +15,7 @@ const Player = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackLength, setTrackLength] = useState(300);
   const [timeElapsed, setTimeElapsed] = useState('0:00');
-  const [timeRemaining, setTimeRemaining] = useState('3:40');
+  const [timeRemaining, setTimeRemaining] = useState('0:00');
 
   useEffect(() => {
     let interval = null;
@@ -35,7 +35,7 @@ const Player = () => {
     setLoadInRequest(true);
 
     const source = {
-      uri: 'https://upload-ex-audio.s3.amazonaws.com/fa9974601cbfa15071042f259b639c8c-Golden%20Empire%20-%20The%20126ers.mp3',
+      uri: props.url,
     };
 
     const initialStatus = {};
