@@ -32,10 +32,10 @@ const Profile = ({navigation}) => {
             <ButtonText>Sair</ButtonText>
           </Button>
 
-          <Button onPress={() => navigation.navigate('PlayerScreen')}>
+          {/* <Button onPress={() => navigation.navigate('PlayerScreen', {text: 'Player'})}>
             <ButtonText>Player</ButtonText>
             <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
-          </Button>
+          </Button> */}
 
         </Info>
       </Container>

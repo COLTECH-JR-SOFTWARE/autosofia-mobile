@@ -21,7 +21,7 @@ export default (props) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        
+
         initialRouteName={props.signed ? Navigation : Start}
         screenOptions={{
           headerShown: false,
@@ -30,7 +30,6 @@ export default (props) => {
         {props.signed ?
           (
             <>
-              <Stack.Screen name='Remember' component={Remember} />
               <Stack.Screen name='Navigation' component={Navigation}/>
               <Stack.Screen name='Article' component={Article} />
               <Stack.Screen name='UpdateData' component={UpdateData} />
@@ -48,12 +47,14 @@ export default (props) => {
                 headerTintColor: 'white',
               }} />
               <Stack.Screen name='PlayerScreen' component={PlayerScreen}/>
+            </>
           )
           : (
             <>
               <Stack.Screen name="Start" component={Start} />
               <Stack.Screen name='SignUp' component={SignUp} />
-              <Stack.Screen name='SignIn' component={SignIn} />)
+              <Stack.Screen name='SignIn' component={SignIn} />
+              <Stack.Screen name='Remember' component={Remember} />
             </>
           )
         }
