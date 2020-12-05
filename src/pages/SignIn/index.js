@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, Component } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInRequest } from '../../store/modules/auth/actions';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import { LoginButton } from 'react-native-fbsdk';
+
 import {
   Container,
   Form,
@@ -58,7 +60,9 @@ const SignIn = ({ navigation }) => {
             onChangeText={setSenha}
           />
 
-          <SubmitButton loading={loading} onPress={handlesubmit}>Participar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handlesubmit}>
+            Participar
+            </SubmitButton>
 
           <View>
             <Line />
@@ -70,10 +74,32 @@ const SignIn = ({ navigation }) => {
             <Icon name="sc-facebook" size={40} color="#fff" />
             <SocialText>Continuar com o Facebook</SocialText>
           </Social>
+
         </Form>
-        <SignLink onPress={() => {navigation.navigate('Remember')}}>
-          <SignLinkText>Esqueci minha senha</SignLinkText>
+        <SignLink onPress={() => {
+
+          navigation.navigate('Remember')
+        }}>
+          <SignLinkText >Esqueci minha senha</SignLinkText>
         </SignLink>
+
+        <View>
+          <LoginButton
+            publishPermissions={["email"]}
+            onLoginFinished={
+              (error, result) => {
+                if (error) {
+                  alert("Login failed with error: " + error.message);
+                } else if (result.isCancelled) {
+                  alert("Login was cancelled");
+                } else {
+                  alert("Login was successful with permissions: " + result.grantedPermissions)
+                }
+              }
+            }
+            onLogoutFinished={() => alert("User logged out")} />
+        </View>
+
       </Container>
     </Background>
   );

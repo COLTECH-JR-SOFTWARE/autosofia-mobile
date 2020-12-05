@@ -14,7 +14,7 @@ import {
 import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
-const SignIn = ({navigation}) => {
+const Remember = ({navigation}) => {
   const passwordRef = useRef();
 
   return (
@@ -48,4 +48,4 @@ const SignIn = ({navigation}) => {
   );
 }
 
-export default SignIn;
+export default Remember;
