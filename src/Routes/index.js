@@ -34,18 +34,7 @@ export default (props) => {
               <Stack.Screen name='Article' component={Article} />
               <Stack.Screen name='UpdateData' component={UpdateData} />
               <Stack.Screen name='UpdatePassword' component={UpdatePassword} />
-              <Stack.Screen name='Chat' component={Chat}  options={{
-                title: 'João de Deus',
-                headerShown: true,
-                headerStyle: {
-                  backgroundColor: '#FFDB58'
-                },
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  color: 'white',
-                },
-                headerTintColor: 'white',
-              }} />
+              <Stack.Screen name='Chat' component={Chat} />
               <Stack.Screen name='PlayerScreen' component={PlayerScreen}/>
             </>
           )

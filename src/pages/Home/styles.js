@@ -32,3 +32,7 @@ export const Title = styled.Text`
   text-align: center;
   margin-bottom: 0px;
 `;
+
+export const Button = styled.Button`
+  
+`;
