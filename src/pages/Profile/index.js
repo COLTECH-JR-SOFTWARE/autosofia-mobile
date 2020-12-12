@@ -1,12 +1,23 @@
 import React from 'react';
 import {AntDesign} from '@expo/vector-icons'
+import { useDispatch, useSelector } from 'react-redux';
 
 import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
+import {signOut} from '~/store/modules/auth/actions'
+
 import { Container, Info, Button, ButtonText  } from './styles';
+import { useLinkProps } from '@react-navigation/native';
 
 const Profile = ({navigation}) => {
+  const signed = useSelector(state => state.auth.signed);
+  const dispatch = useDispatch();
+
+  async function SignOut() {
+    dispatch(signOut());
+  }
+
   return (
     <Background blurRadius={20}>
       <Container>
@@ -28,7 +39,7 @@ const Profile = ({navigation}) => {
             <AntDesign name="right" size={24} color="white" style={{marginRight: 10}}/>
           </Button>
 
-          <Button onPress={() => navigation.navigate('SignIn')}>
+          <Button onPress={SignOut}>
             <ButtonText>Sair</ButtonText>
           </Button>
 
