@@ -83,7 +83,7 @@ const SignIn = ({ navigation }) => {
           <SignLinkText >Esqueci minha senha</SignLinkText>
         </SignLink>
 
-        <View>
+        {/* <View>
           <LoginButton
             publishPermissions={["email"]}
             onLoginFinished={
@@ -98,7 +98,7 @@ const SignIn = ({ navigation }) => {
               }
             }
             onLogoutFinished={() => alert("User logged out")} />
-        </View>
+        </View> */}
 
       </Container>
     </Background>

@@ -5,6 +5,7 @@ import Moment from 'moment';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
+
 const soundObject = new Audio.Sound();
 
 const Player = () => {
@@ -13,9 +14,9 @@ const Player = () => {
   const [isLoad, setIsLoad] = useState(false);
   const [loadInRequest, setLoadInRequest] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [trackLength, setTrackLength] = useState(300);
+  const [trackLength, setTrackLength] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState('0:00');
-  const [timeRemaining, setTimeRemaining] = useState('3:40');
+  const [timeRemaining, setTimeRemaining] = useState('0:00');
 
   useEffect(() => {
     let interval = null;
@@ -32,8 +33,8 @@ const Player = () => {
   }, [isPlaying, seconds]);
 
   async function loadAudio(){
+    await soundObject.unloadAsync();
     setLoadInRequest(true);
-
     const source = {
       uri: 'https://upload-ex-audio.s3.amazonaws.com/fa9974601cbfa15071042f259b639c8c-Golden%20Empire%20-%20The%20126ers.mp3',
     };
@@ -44,12 +45,15 @@ const Player = () => {
     try {
       await soundObject.loadAsync(source, initialStatus, downloadFirst);
       const soundData = await soundObject.getStatusAsync();
-      setTimeRemaining(Moment.utc(soundData.durationMillis).format("m:ss"));
-      setTrackLength(soundData.durationMillis/1000);
+
+      console.log(soundData);
+
+      setTimeRemaining(Moment.utc(soundObject.playableDurationMillis ).format("m:ss"));
+      setTrackLength(this.soundObject.playableDurationMillis /1000);
       setIsLoad(true);
-      //await soundObject.unloadAsync();
     } catch (error) {
       console.log(error);
+      
       // An error occurred!
     }
 
@@ -98,6 +102,34 @@ const Player = () => {
       playSound();
     }
   }
+  async function changeTrack(){
+    await soundObject.unloadAsync();
+    setLoadInRequest(true);
+
+    const source = {
+      uri: 'https://upload-ex-audio.s3.amazonaws.com/fa9974601cbfa15071042f259b639c8c-Golden%20Empire%20-%20The%20126ers.mp3',
+    };
+
+    const initialStatus = {};
+    const downloadFirst = true;
+
+    try {
+      await soundObject.loadAsync(source, initialStatus, downloadFirst);
+      const soundData = await soundObject.getStatusAsync();
+
+      console.log(soundData);
+
+      setTimeRemaining(Moment.utc(soundObject.playableDurationMillis ).format("m:ss"));
+      setTrackLength(this.soundObject.playableDurationMillis /1000);
+      setIsLoad(true);
+      await soundObject.unloadAsync();
+    } catch (error) {
+      console.log(error);
+      
+      // An error occurred!
+    }
+
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,6 +137,8 @@ const Player = () => {
         <TouchableOpacity>
           <Entypo name="controller-jump-to-start" size={25} color="#fff"></Entypo>
         </TouchableOpacity>
+        
+        {/* play button */}
         <TouchableOpacity style={styles.playButtonContainer} onPress={toggleSoundState}>
           {!play ? (
             <FontAwesome5
@@ -118,12 +152,13 @@ const Player = () => {
               name="pause"
               size={35}
               color="#fff"
-              style={[styles.playButton, { marginLeft: 8 }]}
+              style={[styles.playButton, { marginLeft: 0 }]}
             ></FontAwesome5>
           )
           }
         </TouchableOpacity>
-        <TouchableOpacity>
+
+        <TouchableOpacity onPress={changeTrack}>
           <Entypo name="controller-next" size={25} color="#fff"></Entypo>
         </TouchableOpacity>
       </View>
@@ -196,7 +231,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginHorizontal: 32,
-        shadowRadius: 30,
-        shadowOpacity: 0.5
+        
     }
 });
