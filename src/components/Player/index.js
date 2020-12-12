@@ -44,7 +44,7 @@ const Player = (props) => {
     try {
       await soundObject.loadAsync(source, initialStatus, downloadFirst);
       const soundData = await soundObject.getStatusAsync();
-      setTimeRemaining(Moment.utc(soundData.durationMillis).format("m:ss"));
+      setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
       setTrackLength(soundData.durationMillis/1000);
       setIsLoad(true);
       //await soundObject.unloadAsync();
@@ -67,8 +67,8 @@ const Player = (props) => {
   }
 
   function changeTime(seconds) {
-    setTimeElapsed(Moment.utc(seconds * 1000).format("m:ss"));
-    setTimeRemaining(Moment.utc((trackLength - seconds) * 1000).format("m:ss"));
+    setTimeElapsed(Moment.utc(seconds * 1000).format("HH:mm:ss"));
+    setTimeRemaining(Moment.utc((trackLength - seconds) * 1000).format("HH:mm:ss"));
   };
 
   async function handleChangeTime(seconds){
