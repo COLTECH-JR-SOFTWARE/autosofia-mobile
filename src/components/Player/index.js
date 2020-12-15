@@ -16,8 +16,11 @@ const Player = (props) => {
   const [trackLength, setTrackLength] = useState(300);
   const [timeElapsed, setTimeElapsed] = useState('0:00');
   const [timeRemaining, setTimeRemaining] = useState('0:00');
+  const [uri, setUri] = useState('0');
+
 
   useEffect(() => {
+    console.log(props[0]);
     let interval = null;
 
     if (isPlaying && seconds < trackLength - 1) {
@@ -31,23 +34,26 @@ const Player = (props) => {
     return () => clearInterval(interval);
   }, [isPlaying, seconds]);
 
-  async function loadAudio(){
+  async function loadAudio() {
     setLoadInRequest(true);
-
     const source = {
-      uri: props.url,
+      uri: props.url[0].url,
     };
+
 
     const initialStatus = {};
     const downloadFirst = true;
 
     try {
+      await soundObject.unloadAsync();
       await soundObject.loadAsync(source, initialStatus, downloadFirst);
       const soundData = await soundObject.getStatusAsync();
+      console.log(soundData);
+
       setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
-      setTrackLength(soundData.durationMillis/1000);
+      setTrackLength(soundData.durationMillis / 1000);
       setIsLoad(true);
-      //await soundObject.unloadAsync();
+
     } catch (error) {
       console.log(error);
       // An error occurred!
@@ -56,12 +62,14 @@ const Player = (props) => {
     setLoadInRequest(false);
   }
 
-  async function playSound(){
+
+
+  async function playSound() {
     await soundObject.playAsync();
     setIsPlaying(true);
   }
 
-  async function pauseSound(){
+  async function pauseSound() {
     await soundObject.pauseAsync();
     setIsPlaying(false);
   }
@@ -71,7 +79,7 @@ const Player = (props) => {
     setTimeRemaining(Moment.utc((trackLength - seconds) * 1000).format("HH:mm:ss"));
   };
 
-  async function handleChangeTime(seconds){
+  async function handleChangeTime(seconds) {
     await pauseSound();
 
     await soundObject.setPositionAsync(seconds * 1000);
@@ -82,15 +90,15 @@ const Player = (props) => {
   }
 
   async function toggleSoundState() {
-    if(loadInRequest){
+    if (loadInRequest) {
       return;
     }
 
-    if(!isLoad){
+    if (!isLoad) {
       await loadAudio();
     }
 
-    if(play) {
+    if (play) {
       setPlay(false);
       pauseSound();
     } else {
@@ -99,12 +107,77 @@ const Player = (props) => {
     }
   }
 
+  async function nextTrack() {
+    await soundObject.unloadAsync();
+    const initialStatus = {};
+    const downloadFirst = true;
+
+    if(parseInt(uri) + 1 > props.url.length){
+      setUri(0);
+    }else{
+      setUri(parseInt(uri) + 1);
+      console.log(uri);
+    }
+
+    const source = {
+      uri: props.url[uri].url,
+    };
+
+    try {
+     
+      await soundObject.loadAsync(source, initialStatus, downloadFirst);
+      const soundData = await soundObject.getStatusAsync();
+      console.log(source);
+      
+      setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
+      setTrackLength(soundData.durationMillis / 1000);
+      setIsLoad(true);
+
+    } catch (error) {
+      console.log(error);
+      // An error occurred!
+    }
+    setLoadInRequest(false);
+  }
+
+
+  async function backTrack() {
+    await soundObject.unloadAsync();
+    const initialStatus = {};
+    const downloadFirst = true;
+
+    if (uri != 0) {
+      setUri(parseInt(uri) - 1);
+    }
+    else {
+      setUri(0);
+    }
+
+    try {
+      await soundObject.unloadAsync();
+      await soundObject.loadAsync(source, initialStatus, downloadFirst);
+      const soundData = await soundObject.getStatusAsync();
+
+      setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
+      setTrackLength(soundData.durationMillis / 1000);
+      setIsLoad(true);
+
+    } catch (error) {
+      console.log(error);
+      // An error occurred!
+    }
+
+    setLoadInRequest(false);
+
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 32 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={backTrack}>
           <Entypo name="controller-jump-to-start" size={25} color="#fff"></Entypo>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.playButtonContainer} onPress={toggleSoundState}>
           {!play ? (
             <FontAwesome5
@@ -113,17 +186,17 @@ const Player = (props) => {
               color="#fff"
               style={[styles.playButton, { marginLeft: 8 }]}
             ></FontAwesome5>
-        ) : (
-            <FontAwesome5
-              name="pause"
-              size={35}
-              color="#fff"
-              style={[styles.playButton, { marginLeft: 8 }]}
-            ></FontAwesome5>
-          )
+          ) : (
+              <FontAwesome5
+                name="pause"
+                size={35}
+                color="#fff"
+                style={[styles.playButton, { marginLeft: 8 }]}
+              ></FontAwesome5>
+            )
           }
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={nextTrack}>
           <Entypo name="controller-next" size={25} color="#fff"></Entypo>
         </TouchableOpacity>
       </View>
@@ -151,52 +224,51 @@ const Player = (props) => {
 export default Player;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 20,
-    },
-    textLight: {
-        color: "#fff"
-    },
-    text: {
-        color: "#fff"
-    },
-    textDark: {
-        color: "#fff"
-    },
-    coverContainer: {
-        marginTop: 32,
-        width: 250,
-        height: 250,
-        shadowColor: "#5D3F6A",
-        shadowOffset: { height: 15 },
-        shadowRadius: 8,
-        shadowOpacity: 0.3
-    },
-    cover: {
-        width: 250,
-        height: 250,
-        borderRadius: 125
-    },
-    track: {
-        height: 2,
-        borderRadius: 1,
-        backgroundColor: "#FFF"
-    },
-    thumb: {
-        width: 8,
-        height: 8,
-        backgroundColor: "#3D425C"
-    },
-    timeStamp: {
-        fontSize: 11,
-        fontWeight: "500"
-    },
-    playButtonContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        marginHorizontal: 32,
-        shadowRadius: 30,
-        shadowOpacity: 0.5
-    }
+  container: {
+    flex: 1,
+    marginTop: 20,
+  },
+  textLight: {
+    color: "#fff"
+  },
+  text: {
+    color: "#fff"
+  },
+  textDark: {
+    color: "#fff"
+  },
+  coverContainer: {
+    marginTop: 32,
+    width: 250,
+    height: 250,
+    shadowColor: "#5D3F6A",
+    shadowOffset: { height: 15 },
+    shadowRadius: 8,
+    shadowOpacity: 0.3
+  },
+  cover: {
+    width: 250,
+    height: 250,
+    borderRadius: 125
+  },
+  track: {
+    height: 2,
+    borderRadius: 1,
+    backgroundColor: "#FFF"
+  },
+  thumb: {
+    width: 8,
+    height: 8,
+    backgroundColor: "#3D425C"
+  },
+  timeStamp: {
+    fontSize: 11,
+    fontWeight: "500"
+  },
+  playButtonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 32,
+ 
+  }
 });

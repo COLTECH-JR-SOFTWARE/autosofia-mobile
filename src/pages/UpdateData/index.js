@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef,useState } from 'react';
 import Octions from 'react-native-vector-icons/Octicons';
+import { useDispatch, useSelector } from 'react-redux';
+import {updateProfileRequest} from '~/store/modules/user/actions';
 
 import { Container, ArrowBack, SignLink, Title, Form, SubmitButton, FormTitle, FormInput   } from './styles';
 
@@ -8,6 +10,16 @@ import MainIcon from '~/components/MainIcon';
 
 const UpdateData = ({navigation}) => {
   const emailRef = useRef();
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const password = useSelector(state => state);
+
+  
+  function handle(){
+    console.log(password)
+    // dispatch(updateProfileRequest(name,email,password,password,password));
+    navigation.navigate('Navigation');
+  }
 
   return (
     <Background blurRadius={20}>
@@ -31,6 +43,9 @@ const UpdateData = ({navigation}) => {
             placeholder="NOME"
             returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
+            value={name}
+            onChangeText={setName}
+          
           />
 
           <FormInput
@@ -40,9 +55,11 @@ const UpdateData = ({navigation}) => {
             placeholder="EMAIL"
             ref={emailRef}
             returnKeyType="next"
+            value={email}
+            onChangeText={setEmail}
           />
 
-          <SubmitButton onPress={() => {}}>Atualizar</SubmitButton>
+          <SubmitButton onPress={handle}>Atualizar</SubmitButton>
         </Form>
 
       </Container>
