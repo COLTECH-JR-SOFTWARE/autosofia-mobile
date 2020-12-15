@@ -34,5 +34,5 @@ export const Title = styled.Text`
 `;
 
 export const Button = styled.Button`
-  
+
 `;

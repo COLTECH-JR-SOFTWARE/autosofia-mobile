@@ -1,7 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-    profile: null,
+    profile: {},
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -16,7 +16,7 @@ export default function user(state = INITIAL_STATE, action) {
               break;
           }
           case '@auth/SIGN_OUT':
-              draft.profile = null;
+              draft.profile = {};
               break;
           default:
       }
