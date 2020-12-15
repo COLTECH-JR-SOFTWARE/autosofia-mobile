@@ -19,7 +19,6 @@ import {
 } from './styles';
 
 import formatDate from './utils/formatDate';
-import Header from './Header';
 import { createChatApi, createSocket } from '../../services/chat';
 
 const Chat = () => {
@@ -48,7 +47,7 @@ const Chat = () => {
       loadInitialMessages();
     }
   }
-  
+
   async function loadInitialMessages(){
     const { data } = await api.get('users/messages');
     setMessages(data);
@@ -103,7 +102,6 @@ const Chat = () => {
 
   return (
     <Container>
-      <Header />
       <Content
         onEndReached={loadMoreMessages}
         onEndReachedThreshold={0.3}
@@ -134,13 +132,13 @@ const Chat = () => {
         )}
       />
       <BottomBar>
-        <Input 
+        <Input
           value={text}
           onChangeText={text => setText(text)}
         />
         <IconContainer onPress={() => sendMessage(text)}>
-          {loading 
-            ? <ActivityIndicator size="small" color="#FBDE0E"/> 
+          {loading
+            ? <ActivityIndicator size="small" color="#FBDE0E"/>
             : <Icon name="send" size={24} color="#FBDE0E" />
           }
         </IconContainer>

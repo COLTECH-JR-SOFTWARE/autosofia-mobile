@@ -23,7 +23,6 @@ const Home = () => {
       <Container>
         <MainIcon title="AUTOSOFIA"/>
         <Message>Bem vindo, User</Message>
-        <Button title="clica" onPress={navigateToChat}/>
       </Container>
     </Background>
   );
