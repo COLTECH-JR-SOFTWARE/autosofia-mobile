@@ -14,7 +14,7 @@ export function* updateProfile({ payload }) {
       rest.oldPassword ? rest : {}
     );
 
-    const response = yield call(api.put, 'users', profile);
+    const response = yield call(api.put, 'user', profile);
 
     Alert.alert('Sucesso!', 'Perfil atualizado com sucesso');
 

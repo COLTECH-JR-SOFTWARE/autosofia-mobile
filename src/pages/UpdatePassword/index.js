@@ -9,9 +9,9 @@ import Background from '~/components/Background';
 import MainIcon from '~/components/MainIcon';
 
 const UpdatePassword = ({ navigation }) => {
+  const [oldPassword, setoldPassword] = useState('');
   const [password, setPassword] = useState('');
-  const [newpassword, setnewPassword] = useState('');
-  const [confirmnewpassword, confirmsetnewPassword] = useState('');
+  const [confirmPassword, setconfirmPassword] = useState('');
 
   const name = useSelector(state => state.user.profile.name);
   const dispatch = useDispatch();
@@ -19,8 +19,8 @@ const UpdatePassword = ({ navigation }) => {
   const newPasswordRef = useRef();
 
   function handle() {
-    console.log(name)
-    dispatch(updateProfileRequest(name, email, password, newpassword, confirmnewpassword));
+    console.log(name, email, oldPassword, password, confirmPassword)
+    dispatch(updateProfileRequest(name, email, oldPassword, password, confirmPassword));
     navigation.navigate('Navigation');
   }
 
@@ -46,8 +46,8 @@ const UpdatePassword = ({ navigation }) => {
             placeholder="SENHA ATUAL"
             returnKeyType="next"
             onSubmitEditing={() => newPasswordRef.current.focus()}
-            value={password}
-            onChangeText={setPassword}
+            value={oldPassword}
+            onChangeText={setoldPassword}
           />
 
           <FormInput
@@ -56,8 +56,8 @@ const UpdatePassword = ({ navigation }) => {
             placeholder="NOVA SENHA"
             ref={newPasswordRef}
             returnKeyType="next"
-            value={newpassword}
-            onChangeText={setnewPassword}
+            value={password}
+            onChangeText={setPassword}
           />
 
           <FormInput
@@ -66,8 +66,8 @@ const UpdatePassword = ({ navigation }) => {
             placeholder="CONFIRMA NOVA SENHA"
             ref={newPasswordRef}
             returnKeyType="next"
-            value={confirmnewpassword}
-            onChangeText={confirmsetnewPassword}
+            value={confirmPassword}
+            onChangeText={setconfirmPassword}
           />
 
           <SubmitButton onPress={handle}>Atualizar</SubmitButton>

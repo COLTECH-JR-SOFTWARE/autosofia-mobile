@@ -112,11 +112,11 @@ const Player = (props) => {
     const initialStatus = {};
     const downloadFirst = true;
 
-    if(parseInt(uri) + 1 > props.url.length){
+    if(parseInt(uri) + 2 > props.url.length){
       setUri(0);
     }else{
       setUri(parseInt(uri) + 1);
-      console.log(uri);
+      console.log(props.url);
     }
 
     const source = {
@@ -143,21 +143,27 @@ const Player = (props) => {
 
   async function backTrack() {
     await soundObject.unloadAsync();
+    
+    
+    if (uri == 0) {
+      setUri(props.url.length - 1);
+    }
+    else {
+      setUri(parseInt(uri) - 1);
+    }
+
+    const source = {
+      uri: props.url[uri].url,
+    };
     const initialStatus = {};
     const downloadFirst = true;
 
-    if (uri != 0) {
-      setUri(parseInt(uri) - 1);
-    }
-    else {
-      setUri(0);
-    }
 
     try {
       await soundObject.unloadAsync();
       await soundObject.loadAsync(source, initialStatus, downloadFirst);
       const soundData = await soundObject.getStatusAsync();
-
+      console.log(source)
       setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
       setTrackLength(soundData.durationMillis / 1000);
       setIsLoad(true);
