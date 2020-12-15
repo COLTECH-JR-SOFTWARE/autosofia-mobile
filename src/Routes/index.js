@@ -38,13 +38,13 @@ export default (props) => {
                 title: 'João de Deus',
                 headerShown: true,
                 headerStyle: {
-                  backgroundColor: '#FFDB58'
+                  backgroundColor: 'white'
                 },
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
-                  color: 'white',
+                  color: '#FFDB58',
                 },
-                headerTintColor: 'white',
+                headerTintColor: '#FFDB58',
               }} />
               <Stack.Screen name='PlayerScreen' component={PlayerScreen}/>
             </>

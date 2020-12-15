@@ -14,7 +14,8 @@ export function* signIn({ payload }) {
       password,
     });
 
-    const { token, name } = response.data;
+    const { token } = response.data;
+    const {name} = response.data.user;
 
     const user = { name, email};
 
