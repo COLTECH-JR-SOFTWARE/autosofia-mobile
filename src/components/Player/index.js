@@ -16,11 +16,12 @@ const Player = (props) => {
   const [trackLength, setTrackLength] = useState(300);
   const [timeElapsed, setTimeElapsed] = useState('0:00');
   const [timeRemaining, setTimeRemaining] = useState('0:00');
-  const [uri, setUri] = useState('0');
+  const [track, setTrack] = useState('0');
 
 
   useEffect(() => {
-    console.log(props[0]);
+    console.log("atual", track);
+
     let interval = null;
 
     if (isPlaying && seconds < trackLength - 1) {
@@ -37,18 +38,16 @@ const Player = (props) => {
   async function loadAudio() {
     setLoadInRequest(true);
     const source = {
-      uri: props.url[0].url,
+      uri: props.url[track].url,
     };
-
-
     const initialStatus = {};
     const downloadFirst = true;
-
     try {
       await soundObject.unloadAsync();
       await soundObject.loadAsync(source, initialStatus, downloadFirst);
+
       const soundData = await soundObject.getStatusAsync();
-      console.log(soundData);
+      console.log(soundData.soundData.durationMillis(1000));
 
       setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
       setTrackLength(soundData.durationMillis / 1000);
@@ -58,7 +57,6 @@ const Player = (props) => {
       console.log(error);
       // An error occurred!
     }
-
     setLoadInRequest(false);
   }
 
@@ -81,11 +79,9 @@ const Player = (props) => {
 
   async function handleChangeTime(seconds) {
     await pauseSound();
-
     await soundObject.setPositionAsync(seconds * 1000);
     changeTime(seconds);
     setSeconds(seconds);
-
     await playSound();
   }
 
@@ -93,11 +89,9 @@ const Player = (props) => {
     if (loadInRequest) {
       return;
     }
-
     if (!isLoad) {
       await loadAudio();
     }
-
     if (play) {
       setPlay(false);
       pauseSound();
@@ -107,74 +101,29 @@ const Player = (props) => {
     }
   }
 
+
   async function nextTrack() {
-    await soundObject.unloadAsync();
-    const initialStatus = {};
-    const downloadFirst = true;
+    if (parseInt(track) + 2 > props.url.length) {
+      setTrack(0);
+    } else {
+      setTrack(parseInt(track) + 1);
 
-    if(parseInt(uri) + 2 > props.url.length){
-      setUri(0);
-    }else{
-      setUri(parseInt(uri) + 1);
-      console.log(props.url);
+      console.log(props.url[track]);
     }
-
-    const source = {
-      uri: props.url[uri].url,
-    };
-
-    try {
-     
-      await soundObject.loadAsync(source, initialStatus, downloadFirst);
-      const soundData = await soundObject.getStatusAsync();
-      console.log(source);
-      
-      setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
-      setTrackLength(soundData.durationMillis / 1000);
-      setIsLoad(true);
-
-    } catch (error) {
-      console.log(error);
-      // An error occurred!
-    }
-    setLoadInRequest(false);
+    toggleSoundState();
   }
 
 
   async function backTrack() {
     await soundObject.unloadAsync();
-    
-    
-    if (uri == 0) {
+
+    if (track == 0) {
       setUri(props.url.length - 1);
     }
     else {
-      setUri(parseInt(uri) - 1);
+      setTrack(parseInt(track) - 1);
     }
-
-    const source = {
-      uri: props.url[uri].url,
-    };
-    const initialStatus = {};
-    const downloadFirst = true;
-
-
-    try {
-      await soundObject.unloadAsync();
-      await soundObject.loadAsync(source, initialStatus, downloadFirst);
-      const soundData = await soundObject.getStatusAsync();
-      console.log(source)
-      setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
-      setTrackLength(soundData.durationMillis / 1000);
-      setIsLoad(true);
-
-    } catch (error) {
-      console.log(error);
-      // An error occurred!
-    }
-
-    setLoadInRequest(false);
-
+    toggleSoundState();
   }
 
   return (
@@ -275,6 +224,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 32,
- 
+
   }
 });
