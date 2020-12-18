@@ -16,12 +16,11 @@ const Player = (props) => {
   const [trackLength, setTrackLength] = useState(300);
   const [timeElapsed, setTimeElapsed] = useState('0:00');
   const [timeRemaining, setTimeRemaining] = useState('0:00');
+  
   const [track, setTrack] = useState('0');
 
 
   useEffect(() => {
-    console.log("atual", track);
-
     let interval = null;
 
     if (isPlaying && seconds < trackLength - 1) {
@@ -35,32 +34,32 @@ const Player = (props) => {
     return () => clearInterval(interval);
   }, [isPlaying, seconds]);
 
+
   async function loadAudio() {
+    console.log("load")
     setLoadInRequest(true);
     const source = {
       uri: props.url[track].url,
     };
     const initialStatus = {};
     const downloadFirst = true;
+
     try {
+      console.log("t1", track);
+      if (soundObject)
       await soundObject.unloadAsync();
       await soundObject.loadAsync(source, initialStatus, downloadFirst);
-
       const soundData = await soundObject.getStatusAsync();
       console.log(soundData.soundData.durationMillis(1000));
-
       setTimeRemaining(Moment.utc(soundData.durationMillis).format("HH:mm:ss"));
       setTrackLength(soundData.durationMillis / 1000);
       setIsLoad(true);
-
     } catch (error) {
       console.log(error);
-      // An error occurred!
     }
     setLoadInRequest(false);
   }
-
-
+  
 
   async function playSound() {
     await soundObject.playAsync();
@@ -86,6 +85,7 @@ const Player = (props) => {
   }
 
   async function toggleSoundState() {
+    console.log(loadInRequest);
     if (loadInRequest) {
       return;
     }
@@ -95,30 +95,32 @@ const Player = (props) => {
     if (play) {
       setPlay(false);
       pauseSound();
+
     } else {
       setPlay(true);
       playSound();
+
     }
   }
-
-
   async function nextTrack() {
+    setIsLoad(false);
+
     if (parseInt(track) + 2 > props.url.length) {
       setTrack(0);
     } else {
       setTrack(parseInt(track) + 1);
-
-      console.log(props.url[track]);
     }
+    console.log("proxima: ", track);
+    
     toggleSoundState();
+
   }
 
 
   async function backTrack() {
-    await soundObject.unloadAsync();
-
+    setIsLoad(false);
     if (track == 0) {
-      setUri(props.url.length - 1);
+      setTrack(props.url.length - 1);
     }
     else {
       setTrack(parseInt(track) - 1);
